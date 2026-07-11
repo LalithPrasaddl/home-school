@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kannada Letters</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div id="mastered-display">🎯 <span id="accuracy-count">0%</span></div>
+    <div id="streak-display">🔥 <span id="streak-count">0</span></div>
+    <div id="stars-display">⭐ <span id="stars-count">0</span></div>
+  </header>
+
+  <main>
+    <section id="home-screen" class="screen">
+      <h1>ಕನ್ನಡ ಅಕ್ಷರಗಳು</h1>
+      <p>Listen to the sound, then find the matching letter!</p>
+      <div class="mode-list">
+        <button class="mode-card" data-mode="mc">
+          <span class="mode-title">🔤 Multiple Choice</span>
+          <span class="mode-desc">Hear a letter, pick it from 4 options.</span>
+        </button>
+        <button class="mode-card" data-mode="recall">
+          <span class="mode-title">✍️ Free Recall</span>
+          <span class="mode-desc">Hear a letter, write it from memory, then check yourself.</span>
+        </button>
+        <button class="mode-card" data-mode="adaptive">
+          <span class="mode-title">🎯 Adaptive (Recommended)</span>
+          <span class="mode-desc">Starts as multiple choice, switches to free recall as you improve — and back if you slip.</span>
+        </button>
+      </div>
+      <button id="browse-btn" class="big-button secondary browse-link">🔊 Listen to All Letters</button>
+    </section>
+
+    <section id="browse-screen" class="screen hidden">
+      <h2>All 49 Letters</h2>
+      <p class="mode-desc">Tap 🔊 next to any letter to hear how it sounds.</p>
+      <div id="browse-list" class="browse-list"></div>
+      <button id="browse-back-btn" class="big-button">Back</button>
+    </section>
+
+    <section id="practice-screen" class="screen hidden">
+      <span class="phase-tag" id="phase-tag">Multiple choice</span>
+
+      <div id="mc-screen" class="screen hidden">
+        <button id="replay-btn" class="speaker-button" aria-label="Play sound">🔊</button>
+        <div id="choices"></div>
+      </div>
+
+      <div id="recall-screen" class="screen hidden">
+        <button id="replay-btn-recall" class="speaker-button" aria-label="Play sound">🔊</button>
+        <div id="canvas-wrap">
+          <canvas id="draw-canvas" width="280" height="280"></canvas>
+        </div>
+        <div class="row">
+          <button id="clear-btn" class="big-button secondary">Clear</button>
+          <button id="show-answer-btn" class="big-button">Show Answer</button>
+        </div>
+        <div id="reveal-area" class="hidden">
+          <div class="reveal-glyph" id="reveal-glyph"></div>
+        </div>
+        <div id="self-report" class="row hidden">
+          <button id="self-yes" class="big-button">✅ I got it right</button>
+          <button id="self-no" class="big-button secondary">❌ I got it wrong</button>
+        </div>
+      </div>
+
+      <div id="feedback"></div>
+      <button id="home-btn" class="big-button secondary">Home</button>
+    </section>
+  </main>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

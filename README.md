@@ -1,6 +1,6 @@
 # Learning Corner
 
-Small learning games for young kids: Kannada letters, plus kid-sized versions of word games like Wordle and Strands. Built as a plain static site — no framework, no build step, no dependencies. Phone-first, but works on desktop too.
+Small learning games for young kids: Kannada letters, plus kid-sized versions of word games like Wordle, Strands and Spelling Bee. Built as a plain static site — no framework, no build step, no dependencies. Phone-first, but works on desktop too.
 
 ## Running it
 
@@ -33,6 +33,10 @@ A Wordle-style game: guess a hidden 3- or 4-letter word in 6 tries. Tiles turn g
 
 A Strands-style themed word search: find 4 hidden words (straight across or down) in a 5×5 letter grid, with picture clue cards for each word. Drag across letters or tap them in order. Tapping a clue card makes that word's first letter glow. Puzzles are generated fresh each time from themes like animals, food and things that go.
 
+### Busy Bee (6+)
+
+A Spelling Bee-style game: make words from 5 letters arranged as a flower. Every word must use the yellow centre letter and be at least 3 letters long; letters can be reused. Each hidden word has a picture clue card with one blank per letter, and tapping a card reveals its first letter. A bee flies along the top towards a sunflower as words are found. Puzzles are generated from the shared word list, so every answer is a word with a picture.
+
 The word games keep no progress or scores — every round starts fresh.
 
 ## Project structure
@@ -43,6 +47,7 @@ The word games keep no progress or scores — every round starts fresh.
 - `shared/confetti.js` — celebration effect used by the games
 - `word-guess/` — Word Guess (Wordle-style)
 - `word-hunt/` — Word Hunt (Strands-style)
+- `busy-bee/` — Busy Bee (Spelling Bee-style)
 - `kannada/` — the Kannada letters section:
   - `data.js` — the 49 letters (glyph + romanization)
   - `app.js` — quiz logic, question selection, and rendering

@@ -1,0 +1,200 @@
+:root {
+  --honey: #f5c518;
+  --honey-dark: #d4a20a;
+  --petal: #ffffff;
+  --petal-edge: #f7d774;
+  --found: #a7dba0;
+}
+
+.bb {
+  width: 100%;
+  max-width: 560px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.bb-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.6rem 16px;
+}
+
+/* Bee flies along the track towards the sunflower as words are found. */
+.track {
+  position: relative;
+  flex: 1;
+  height: 2.6rem;
+}
+.track-line {
+  position: absolute;
+  left: 1rem;
+  right: 1.2rem;
+  top: 50%;
+  border-top: 3px dashed #e2c463;
+}
+.track-bee, .track-flower {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.8rem;
+  line-height: 1;
+}
+.track-bee { left: 0; transition: left 0.6s ease; z-index: 1; }
+.track-flower { right: 0; }
+
+.bb-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  padding: 0 16px 1.2rem;
+}
+
+/* ---- Typed word ---- */
+.word {
+  min-height: 2.8rem;
+  display: flex;
+  align-items: center;
+  font-size: 2.2rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.word .is-center { color: var(--honey-dark); }
+.word .caret {
+  width: 3px;
+  height: 2.2rem;
+  margin-left: 3px;
+  background: var(--ink);
+  animation: blink 1s steps(1) infinite;
+}
+.word.shake { animation: shake 0.4s ease; }
+
+.message {
+  min-height: 1.5rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.message.show { opacity: 1; }
+
+/* ---- Flower of letters: centre + 4 petals in a plus shape ---- */
+.flower {
+  --petal-size: min(21vw, 11vh, 92px);
+  display: grid;
+  grid-template-columns: repeat(3, var(--petal-size));
+  grid-template-rows: repeat(3, var(--petal-size));
+  gap: 4px;
+}
+@supports (height: 1dvh) {
+  .flower { --petal-size: min(21vw, 11dvh, 92px); }
+}
+.petal {
+  width: 100%;
+  height: 100%;
+  font-size: calc(var(--petal-size) * 0.45);
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--ink);
+  border-radius: 50%;
+  border: 4px solid var(--petal-edge);
+  background: var(--petal);
+  box-shadow: 0 4px 0 var(--petal-edge);
+  cursor: pointer;
+  padding: 0;
+  animation: pop 0.25s ease;
+}
+.petal:active { transform: translateY(3px) scale(0.96); box-shadow: 0 1px 0 var(--petal-edge); }
+.petal-0 { grid-area: 1 / 2; }
+.petal-1 { grid-area: 2 / 3; }
+.petal-2 { grid-area: 3 / 2; }
+.petal-3 { grid-area: 2 / 1; }
+.petal-center {
+  grid-area: 2 / 2;
+  background: var(--honey);
+  border-color: var(--honey-dark);
+  box-shadow: 0 4px 0 var(--honey-dark);
+}
+.petal-center:active { box-shadow: 0 1px 0 var(--honey-dark); }
+.petal.wiggle { animation: wiggle 0.6s ease; }
+
+/* ---- Delete / shuffle / enter ---- */
+.actions { display: flex; gap: 0.8rem; }
+.action {
+  width: 4rem;
+  height: 3rem;
+  font-size: 1.4rem;
+  font-weight: 800;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  color: var(--ink);
+}
+.action:active { transform: translateY(2px); }
+.action-back { background: #ffd6e5; box-shadow: 0 3px 0 #e8a3bd; }
+.action-shuffle { background: #e3e8ef; box-shadow: 0 3px 0 #c3cad4; }
+.action-enter { background: #cfe9d0; color: white; box-shadow: 0 3px 0 #a8cfa9; }
+.action-enter.ready { background: var(--good); box-shadow: 0 3px 0 #388e3c; animation: pulse 1s ease-in-out infinite; }
+
+/* ---- Clue cards: picture + one blank per letter ---- */
+.clues {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+}
+@media (min-width: 600px) {
+  .clues { grid-template-columns: repeat(4, 1fr); }
+}
+.clue {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.5rem;
+  border-radius: 14px;
+  border: 3px solid var(--petal-edge);
+  background: var(--card);
+  cursor: pointer;
+}
+.clue:active { transform: scale(0.96); }
+.clue-emoji { font-size: 1.6rem; line-height: 1.1; }
+.slots { display: flex; gap: 3px; }
+.slot {
+  width: 1rem;
+  height: 1.3rem;
+  display: grid;
+  place-items: center;
+  font-size: 0.9rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  border-bottom: 3px solid #c3cad4;
+}
+.slot.hinted { color: #9aa1ab; }
+.clue.found { background: var(--found); border-color: var(--found); cursor: default; animation: pop 0.3s ease; }
+.clue.found .slot { border-bottom-color: transparent; }
+.clue.wiggle { animation: wiggle 0.6s ease; }
+
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes shake {
+  20%, 60% { transform: translateX(-8px); }
+  40%, 80% { transform: translateX(8px); }
+}
+@keyframes wiggle {
+  20% { transform: rotate(-8deg); }
+  40% { transform: rotate(8deg); }
+  60% { transform: rotate(-4deg); }
+  80% { transform: rotate(4deg); }
+}
+@keyframes pulse { 50% { transform: scale(1.06); } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

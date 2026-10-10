@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Busy Bee</title>
+  <link rel="stylesheet" href="../shared/theme.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="bb">
+    <header class="bb-header">
+      <a class="icon-btn" href="../" aria-label="Back to all games">🏠</a>
+      <div class="track" aria-hidden="true">
+        <span class="track-line"></span>
+        <span id="track-bee" class="track-bee">🐝</span>
+        <span class="track-flower">🌻</span>
+      </div>
+      <button id="skip-btn" class="icon-btn" aria-label="New puzzle">🔄</button>
+    </header>
+
+    <main class="bb-main">
+      <div id="word" class="word" aria-live="polite"></div>
+      <div id="message" class="message"></div>
+
+      <div id="flower" class="flower"></div>
+
+      <div class="actions">
+        <button id="back-btn" class="action action-back" aria-label="Delete letter">⌫</button>
+        <button id="shuffle-btn" class="action action-shuffle" aria-label="Mix up letters">🔀</button>
+        <button id="enter-btn" class="action action-enter" aria-label="Check word">✓</button>
+      </div>
+
+      <div id="clues" class="clues"></div>
+      <button id="new-btn" class="new-btn hidden">New puzzle ▶</button>
+    </main>
+  </div>
+
+  <div id="confetti" class="confetti" aria-hidden="true"></div>
+
+  <script src="../shared/words.js"></script>
+  <script src="../shared/confetti.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

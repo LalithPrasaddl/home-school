@@ -17,14 +17,18 @@ python3 -m http.server 8000
 
 Opening `index.html` directly via `file://` mostly works but is not recommended — some browsers restrict `speechSynthesis`/canvas APIs on `file://`, so prefer the local server.
 
-There is no test suite, linter, or build/lint/typecheck command in this repo. Verify changes by loading the page in a browser (or at minimum `node --check app.js` for syntax) and exercising the flow by hand.
+There is no test suite, linter, or build/lint/typecheck command in this repo. Verify changes by loading the page in a browser (or at minimum `node --check kannada/app.js` for syntax) and exercising the flow by hand.
 
-## Files
+## Layout: hub + sections
+
+The root `index.html` (+ `home.css`) is a hub page listing learning sections as cards. Each section is a self-contained page in its own folder (currently only `kannada/`), linked with plain `<a href>` — no client-side router, so browser/phone back works natively and each section's script-scope globals stay isolated. `shared/theme.css` holds the common tokens (colors, font, body, `.hidden`, `.back-link`) and is loaded before each page's own stylesheet. To add a section: create `<name>/index.html` linking `../shared/theme.css`, add a `← All sections` back link (`href="../"`), and add a `.section-card` to the hub. Use relative paths so the site works when served from a subpath.
+
+## Files (Kannada section, all under `kannada/`)
 
 - `data.js` — the single source of truth for content: `LETTERS`, an array of all 49 letters of the modern Kannada alphabet (13 vowels + 2 yogavaahakas + 34 consonants — deliberately excludes the archaic ಱ/ೞ). Each entry is `{ id, glyph, roman }`.
 - `app.js` — all app logic (state, question selection, DOM rendering). One file, no modules (loaded as a plain `<script>`, so top-level `const`/`let` are just script-scope, not attached to `window`).
 - `index.html` — three screens toggled via a `.hidden` class: `#home-screen`, `#browse-screen`, `#practice-screen` (which itself toggles between `#mc-screen` and `#recall-screen`).
-- `style.css` — kid-friendly styling; includes a `@media (max-width: 480px)` block for phones.
+- `style.css` — Kannada-specific styling on top of `shared/theme.css`; includes a `@media (max-width: 480px)` block for phones.
 
 ## Architecture: the adaptive quiz engine
 

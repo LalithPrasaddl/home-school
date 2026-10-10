@@ -1,0 +1,48 @@
+.hub {
+  width: 100%;
+  max-width: 640px;
+  padding: 1.6rem 1.2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.hub h1 { margin: 0; text-align: center; }
+.hub-sub { margin: 0 0 0.8rem; opacity: 0.8; text-align: center; }
+
+/* One column on phones, two side by side on wider screens. */
+.section-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.section-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.3rem;
+  padding: 1.4rem 1rem;
+  border-radius: 20px;
+  border: 4px solid var(--accent2);
+  background: var(--card);
+  color: var(--ink);
+  text-decoration: none;
+  box-shadow: 0 4px 0 #5aa3ab;
+  transition: transform 0.05s ease;
+}
+a.section-card:active { transform: translateY(3px); box-shadow: 0 1px 0 #5aa3ab; }
+
+.section-icon { font-size: 3rem; font-weight: 700; line-height: 1.2; }
+.section-title { font-size: 1.2rem; font-weight: 700; }
+.section-desc { font-size: 0.9rem; opacity: 0.8; }
+
+.section-card.placeholder {
+  border-style: dashed;
+  box-shadow: none;
+  opacity: 0.55;
+  justify-content: center;
+}

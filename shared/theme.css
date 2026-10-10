@@ -1,0 +1,42 @@
+/* Shared look for the hub page and every section. Section stylesheets
+   load this first and only add what's specific to them. */
+:root {
+  --bg: #fef6e4;
+  --ink: #2b2d42;
+  --accent: #f582ae;
+  --accent2: #8bd3dd;
+  --good: #4caf50;
+  --bad: #ef4444;
+  --card: #ffffff;
+  font-size: 20px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Baloo 2', 'Comic Sans MS', system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hidden { display: none !important; }
+
+.back-link {
+  align-self: flex-start;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--ink);
+  opacity: 0.7;
+  text-decoration: none;
+  padding: 0.3rem 0;
+}
+.back-link:active { opacity: 1; }
+
+@media (max-width: 480px) {
+  :root { font-size: 17px; }
+}

@@ -8,7 +8,7 @@ A small web app to help a young child learn to recognize and recall written Kann
 python3 -m http.server 8000
 ```
 
-Then open `http://localhost:8000`. (Serving locally is recommended over opening `index.html` directly — some browsers restrict speech/canvas APIs on `file://`.)
+Then open `http://localhost:8000` and pick a section. (Serving locally is recommended over opening `index.html` directly — some browsers restrict speech/canvas APIs on `file://`.)
 
 ## How it works
 
@@ -23,9 +23,12 @@ Then open `http://localhost:8000`. (Serving locally is recommended over opening 
 
 ## Project structure
 
-- `data.js` — the 49 letters (glyph + romanization)
-- `app.js` — quiz logic, question selection, and rendering
-- `index.html` — markup for the home/browse/practice screens
-- `style.css` — styling, including mobile-friendly responsive rules
+- `index.html`, `home.css` — the hub page listing all learning sections
+- `shared/theme.css` — colors/fonts shared by every page
+- `kannada/` — the Kannada letters section:
+  - `data.js` — the 49 letters (glyph + romanization)
+  - `app.js` — quiz logic, question selection, and rendering
+  - `index.html` — markup for the home/browse/practice screens
+  - `style.css` — styling, including mobile-friendly responsive rules
 
 See `CLAUDE.md` for deeper architecture notes if you're working on this with Claude Code.

@@ -46,3 +46,30 @@ a.section-card:active { transform: translateY(3px); box-shadow: 0 1px 0 #5aa3ab;
   opacity: 0.55;
   justify-content: center;
 }
+
+.section-card { position: relative; }
+.age-badge {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.7rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  padding: 0.1rem 0.55rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: white;
+}
+
+.mini-tiles { display: flex; gap: 4px; padding: 0.35rem 0; }
+.mini-tiles span {
+  width: 2.3rem;
+  height: 2.3rem;
+  display: grid;
+  place-items: center;
+  font-size: 1.3rem;
+  border-radius: 8px;
+  color: white;
+}
+.mini-tiles .g { background: var(--good); }
+.mini-tiles .y { background: #f2b632; }
+.mini-tiles .x { background: #9aa1ab; }

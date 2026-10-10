@@ -1,0 +1,50 @@
+// Kid-safe word list shared by the word games. Every word must be something
+// a ~6yo knows and has an unambiguous emoji (used as the picture hint).
+// Word length is derived from `word`; games split it with [...word], so a
+// future Kannada list of plain letters (e.g. 'ಕಮಲ') works the same way.
+const WORDS = [
+  // 3 letters
+  { word: 'cat', emoji: '🐱' }, { word: 'dog', emoji: '🐶' }, { word: 'cow', emoji: '🐮' },
+  { word: 'pig', emoji: '🐷' }, { word: 'hen', emoji: '🐔' }, { word: 'fox', emoji: '🦊' },
+  { word: 'bat', emoji: '🦇' }, { word: 'bee', emoji: '🐝' }, { word: 'ant', emoji: '🐜' },
+  { word: 'owl', emoji: '🦉' }, { word: 'ram', emoji: '🐏' }, { word: 'ape', emoji: '🦍' },
+  { word: 'bug', emoji: '🐛' }, { word: 'rat', emoji: '🐀' }, { word: 'fly', emoji: '🪰' },
+  { word: 'sun', emoji: '☀️' }, { word: 'hat', emoji: '👒' }, { word: 'cap', emoji: '🧢' },
+  { word: 'bus', emoji: '🚌' }, { word: 'car', emoji: '🚗' }, { word: 'van', emoji: '🚐' },
+  { word: 'cup', emoji: '🥤' }, { word: 'bed', emoji: '🛏️' }, { word: 'pen', emoji: '🖊️' },
+  { word: 'box', emoji: '📦' }, { word: 'bag', emoji: '👜' }, { word: 'egg', emoji: '🥚' },
+  { word: 'pie', emoji: '🥧' }, { word: 'nut', emoji: '🥜' }, { word: 'key', emoji: '🔑' },
+  { word: 'log', emoji: '🪵' }, { word: 'map', emoji: '🗺️' }, { word: 'net', emoji: '🥅' },
+  { word: 'pan', emoji: '🍳' }, { word: 'toy', emoji: '🧸' }, { word: 'web', emoji: '🕸️' },
+  { word: 'ice', emoji: '🧊' }, { word: 'sea', emoji: '🌊' }, { word: 'leg', emoji: '🦵' },
+  { word: 'arm', emoji: '💪' }, { word: 'ear', emoji: '👂' }, { word: 'eye', emoji: '👁️' },
+  { word: 'lip', emoji: '👄' }, { word: 'hug', emoji: '🤗' }, { word: 'run', emoji: '🏃' },
+  { word: 'tea', emoji: '🍵' }, { word: 'six', emoji: '6️⃣' }, { word: 'ten', emoji: '🔟' },
+  { word: 'two', emoji: '2️⃣' }, { word: 'one', emoji: '1️⃣' }, { word: 'red', emoji: '🔴' },
+  { word: 'mom', emoji: '👩' }, { word: 'dad', emoji: '👨' }, { word: 'saw', emoji: '🪚' },
+  { word: 'axe', emoji: '🪓' }, { word: 'tub', emoji: '🛁' }, { word: 'jar', emoji: '🫙' },
+  { word: 'boy', emoji: '👦' }, { word: 'kid', emoji: '🧒' }, { word: 'gem', emoji: '💎' },
+  { word: 'pin', emoji: '📌' },
+
+  // 4 letters
+  { word: 'frog', emoji: '🐸' }, { word: 'fish', emoji: '🐟' }, { word: 'bird', emoji: '🐦' },
+  { word: 'duck', emoji: '🦆' }, { word: 'goat', emoji: '🐐' }, { word: 'lion', emoji: '🦁' },
+  { word: 'bear', emoji: '🐻' }, { word: 'deer', emoji: '🦌' }, { word: 'crab', emoji: '🦀' },
+  { word: 'seal', emoji: '🦭' }, { word: 'swan', emoji: '🦢' }, { word: 'wolf', emoji: '🐺' },
+  { word: 'worm', emoji: '🪱' }, { word: 'cake', emoji: '🎂' }, { word: 'milk', emoji: '🥛' },
+  { word: 'corn', emoji: '🌽' }, { word: 'rice', emoji: '🍚' }, { word: 'pear', emoji: '🍐' },
+  { word: 'kiwi', emoji: '🥝' }, { word: 'soup', emoji: '🍲' }, { word: 'taco', emoji: '🌮' },
+  { word: 'ball', emoji: '⚽' }, { word: 'kite', emoji: '🪁' }, { word: 'drum', emoji: '🥁' },
+  { word: 'bell', emoji: '🔔' }, { word: 'book', emoji: '📖' }, { word: 'boat', emoji: '⛵' },
+  { word: 'ship', emoji: '🚢' }, { word: 'bike', emoji: '🚲' }, { word: 'taxi', emoji: '🚕' },
+  { word: 'tree', emoji: '🌳' }, { word: 'leaf', emoji: '🍃' }, { word: 'rose', emoji: '🌹' },
+  { word: 'star', emoji: '⭐' }, { word: 'moon', emoji: '🌙' }, { word: 'rain', emoji: '🌧️' },
+  { word: 'snow', emoji: '❄️' }, { word: 'fire', emoji: '🔥' }, { word: 'rock', emoji: '🪨' },
+  { word: 'hand', emoji: '✋' }, { word: 'foot', emoji: '🦶' }, { word: 'nose', emoji: '👃' },
+  { word: 'king', emoji: '🤴' }, { word: 'lock', emoji: '🔒' }, { word: 'sock', emoji: '🧦' },
+  { word: 'shoe', emoji: '👟' }, { word: 'coat', emoji: '🧥' }, { word: 'ring', emoji: '💍' },
+  { word: 'gift', emoji: '🎁' }, { word: 'home', emoji: '🏠' }, { word: 'door', emoji: '🚪' },
+  { word: 'tent', emoji: '⛺' }, { word: 'baby', emoji: '👶' }, { word: 'girl', emoji: '👧' },
+  { word: 'swim', emoji: '🏊' }, { word: 'bath', emoji: '🛁' }, { word: 'bowl', emoji: '🥣' },
+  { word: 'fork', emoji: '🍴' },
+];

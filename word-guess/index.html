@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Word Guess</title>
+  <link rel="stylesheet" href="../shared/theme.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="wg">
+    <header class="wg-header">
+      <a class="icon-btn" href="../" aria-label="Back to all games">🏠</a>
+      <div class="length-picker" role="group" aria-label="Word length">
+        <button class="len-chip" data-len="3" aria-label="3 letter words">
+          <span class="mini"></span><span class="mini"></span><span class="mini"></span>
+        </button>
+        <button class="len-chip" data-len="4" aria-label="4 letter words">
+          <span class="mini"></span><span class="mini"></span><span class="mini"></span><span class="mini"></span>
+        </button>
+      </div>
+      <button id="mute-btn" class="icon-btn" aria-label="Turn sound on">🔇</button>
+    </header>
+
+    <main class="wg-main">
+      <div id="board" class="board"></div>
+
+      <div class="hint-area">
+        <button id="hint-btn" class="hint-btn hidden" aria-label="Show a picture hint">💡</button>
+        <button id="hint-picture" class="hint-picture hidden" aria-label="Hear the word"></button>
+      </div>
+
+      <div id="keyboard" class="keyboard"></div>
+
+      <div id="result" class="result hidden">
+        <button id="result-emoji" class="result-emoji" aria-label="Hear the word"></button>
+        <div id="result-word" class="result-word"></div>
+        <div id="result-text" class="result-text"></div>
+        <button id="new-btn" class="new-btn">New word ▶</button>
+      </div>
+    </main>
+  </div>
+
+  <div id="confetti" class="confetti" aria-hidden="true"></div>
+
+  <script src="../shared/words.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

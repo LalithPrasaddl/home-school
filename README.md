@@ -25,6 +25,8 @@ Then open `http://localhost:8000` and pick a section. (Serving locally is recomm
 
 - `index.html`, `home.css` — the hub page listing all learning sections
 - `shared/theme.css` — colors/fonts shared by every page
+- `shared/words.js` — kid-safe word list (word + emoji) used by the word games
+- `word-guess/` — Wordle-style word game for kids (3/4-letter words, picture hints)
 - `kannada/` — the Kannada letters section:
   - `data.js` — the 49 letters (glyph + romanization)
   - `app.js` — quiz logic, question selection, and rendering

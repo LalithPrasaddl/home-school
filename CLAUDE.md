@@ -21,7 +21,9 @@ There is no test suite, linter, or build/lint/typecheck command in this repo. Ve
 
 ## Layout: hub + sections
 
-The root `index.html` (+ `home.css`) is a hub page listing learning sections as cards. Each section is a self-contained page in its own folder (currently only `kannada/`), linked with plain `<a href>` — no client-side router, so browser/phone back works natively and each section's script-scope globals stay isolated. `shared/theme.css` holds the common tokens (colors, font, body, `.hidden`, `.back-link`) and is loaded before each page's own stylesheet. To add a section: create `<name>/index.html` linking `../shared/theme.css`, add a `← All sections` back link (`href="../"`), and add a `.section-card` to the hub. Use relative paths so the site works when served from a subpath.
+The root `index.html` (+ `home.css`) is a hub page listing learning sections as cards. Each section is a self-contained page in its own folder (currently only `kannada/`), linked with plain `<a href>` — no client-side router, so browser/phone back works natively and each section's script-scope globals stay isolated. `shared/theme.css` holds the common tokens (colors, font, body, `.hidden`, `.back-link`) and is loaded before each page's own stylesheet. To add a section: create `<name>/index.html` linking `../shared/theme.css`, add a `← All sections` back link (`href="../"`), and add a `.section-card` (with an `.age-badge`) to the hub. Use relative paths so the site works when served from a subpath.
+
+`shared/words.js` is the kid-safe word list (`WORDS`: `{ word, emoji }`) shared by the word games; word length is derived via `[...word]` so a future Kannada list of plain letters (no vowel signs/conjuncts, e.g. ಕಮಲ) can drop in. `word-guess/` is a Wordle-style game on top of it: 3- or 4-letter words, 6 tries, any guess accepted (no dictionary check, deliberately), alphabetical on-screen keyboard (kids know ABC order, not QWERTY), 💡 emoji hint after 3 misses, no persisted state. Avoid NYT trademark names (Wordle/Spelling Bee/Strands) for these games.
 
 ## Files (Kannada section, all under `kannada/`)
 

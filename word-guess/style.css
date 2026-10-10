@@ -5,8 +5,6 @@
   --key-bg: #e3e8ef;
 }
 
-button { font-family: inherit; touch-action: manipulation; }
-
 .wg {
   width: 100%;
   max-width: 520px;
@@ -22,21 +20,6 @@ button { font-family: inherit; touch-action: manipulation; }
   justify-content: space-between;
   padding: 0.6rem 16px;
 }
-
-.icon-btn {
-  width: 2.6rem;
-  height: 2.6rem;
-  display: grid;
-  place-items: center;
-  font-size: 1.3rem;
-  border-radius: 50%;
-  border: 3px solid var(--accent2);
-  background: var(--card);
-  text-decoration: none;
-  cursor: pointer;
-  padding: 0;
-}
-.icon-btn:active { transform: scale(0.92); }
 
 /* Word-length picker: tiny tile rows that mirror the board. */
 .length-picker { display: flex; gap: 0.5rem; }
@@ -192,6 +175,7 @@ button { font-family: inherit; touch-action: manipulation; }
   cursor: pointer;
 }
 .result-text { font-size: 1.1rem; font-weight: 700; order: -1; }
+.result .new-btn { margin-top: 0.4rem; }
 .result-word {
   font-size: 2rem;
   font-weight: 800;
@@ -199,30 +183,7 @@ button { font-family: inherit; touch-action: manipulation; }
   letter-spacing: 0.25em;
   margin-right: -0.25em;
 }
-.new-btn {
-  margin-top: 0.4rem;
-  font-size: 1.4rem;
-  font-weight: 700;
-  padding: 0.8rem 2.2rem;
-  border-radius: 999px;
-  border: none;
-  background: var(--accent);
-  color: white;
-  cursor: pointer;
-  box-shadow: 0 4px 0 #c94f82;
-}
-.new-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #c94f82; }
 
-/* ---- Confetti ---- */
-.confetti { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
-.confetti span {
-  position: absolute;
-  top: -2rem;
-  font-size: 1.6rem;
-  animation: fall linear forwards;
-}
-
-@keyframes pop { 50% { transform: scale(1.12); } }
 @keyframes flip { 50% { transform: rotateX(90deg); } }
 @keyframes shake {
   20%, 60% { transform: translateX(-8px); }
@@ -236,9 +197,7 @@ button { font-family: inherit; touch-action: manipulation; }
   90% { transform: rotate(-8deg); }
 }
 @keyframes pulse { 50% { transform: scale(1.06); } }
-@keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; }
-  .confetti { display: none; }
 }

@@ -177,7 +177,7 @@ function submitGuess() {
     const won = result.every((s) => s === 'correct');
     if (won) {
       document.querySelectorAll('.board-row')[rowIdx].classList.add('win');
-      celebrate();
+      celebrate(target.emoji);
       endGame(true);
     } else if (guesses.length >= MAX_GUESSES) {
       endGame(false);
@@ -199,20 +199,6 @@ function endGame(won) {
     document.getElementById('result').classList.remove('hidden');
     speak(won ? `Yay! ${target.word}!` : `The word was ${target.word}`);
   }, won ? 900 : 400);
-}
-
-function celebrate() {
-  const box = document.getElementById('confetti');
-  const pieces = ['🎉', '⭐', '🌟', '🎈', target.emoji];
-  for (let i = 0; i < 24; i++) {
-    const piece = document.createElement('span');
-    piece.textContent = pieces[i % pieces.length];
-    piece.style.left = `${Math.random() * 100}%`;
-    piece.style.animationDuration = `${1.6 + Math.random() * 1.2}s`;
-    piece.style.animationDelay = `${Math.random() * 0.4}s`;
-    box.appendChild(piece);
-    setTimeout(() => piece.remove(), 3200);
-  }
 }
 
 function newGame() {

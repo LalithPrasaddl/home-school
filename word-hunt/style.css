@@ -1,0 +1,131 @@
+:root {
+  --found-0: #8bd3dd;
+  --found-1: #f7a8c8;
+  --found-2: #f5cf6b;
+  --found-3: #a7dba0;
+}
+
+.wh {
+  width: 100%;
+  max-width: 560px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.wh-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  padding: 0.6rem 16px;
+}
+.theme-title {
+  margin: 0;
+  font-size: 1.25rem;
+  text-align: center;
+  flex: 1;
+}
+
+.wh-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  padding: 0 16px 1.2rem;
+}
+
+/* ---- Letter grid ---- */
+.grid {
+  --cell: min(16vw, 9vh, 76px);
+  display: grid;
+  grid-template-columns: repeat(5, var(--cell));
+  gap: 6px;
+  touch-action: none; /* dragging across letters must not scroll the page */
+  user-select: none;
+  -webkit-user-select: none;
+}
+@supports (height: 1dvh) {
+  .grid { --cell: min(16vw, 9dvh, 76px); }
+}
+
+.cell {
+  width: var(--cell);
+  height: var(--cell);
+  display: grid;
+  place-items: center;
+  font-size: calc(var(--cell) * 0.5);
+  font-weight: 800;
+  text-transform: uppercase;
+  border-radius: 50%;
+  background: var(--card);
+  border: 3px solid #e3e8ef;
+  cursor: pointer;
+  transition: background 0.1s, transform 0.1s;
+}
+.cell.selected { background: var(--accent); border-color: var(--accent); color: white; transform: scale(1.08); }
+.cell.found { animation: pop 0.3s ease both; }
+.cell.found-0 { background: var(--found-0); border-color: var(--found-0); }
+.cell.found-1 { background: var(--found-1); border-color: var(--found-1); }
+.cell.found-2 { background: var(--found-2); border-color: var(--found-2); }
+.cell.found-3 { background: var(--found-3); border-color: var(--found-3); }
+.cell.found.selected { background: var(--accent); border-color: var(--accent); }
+.cell.nope { animation: nope 0.35s ease; }
+.cell.hint { animation: glow 0.7s ease 3; }
+
+/* ---- Clue cards ---- */
+.clues {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.7rem;
+}
+@media (min-width: 600px) {
+  .clues { grid-template-columns: repeat(4, 1fr); }
+}
+
+.clue {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.6rem 0.4rem;
+  border-radius: 16px;
+  border: 3px solid var(--accent2);
+  background: var(--card);
+  cursor: pointer;
+}
+.clue:active { transform: scale(0.96); }
+.clue-emoji { font-size: 2rem; line-height: 1.1; }
+.slots { display: flex; gap: 3px; }
+.slot {
+  width: 1.15rem;
+  height: 1.4rem;
+  display: grid;
+  place-items: center;
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  border-bottom: 3px solid #c3cad4;
+}
+.clue.found { cursor: default; animation: pop 0.3s ease; }
+.clue.found .slot { border-bottom-color: transparent; }
+.clue.found-0 { background: var(--found-0); border-color: var(--found-0); }
+.clue.found-1 { background: var(--found-1); border-color: var(--found-1); }
+.clue.found-2 { background: var(--found-2); border-color: var(--found-2); }
+.clue.found-3 { background: var(--found-3); border-color: var(--found-3); }
+
+@keyframes nope {
+  25% { transform: translateX(-5px); background: #ffd6d6; }
+  75% { transform: translateX(5px); background: #ffd6d6; }
+}
+@keyframes glow {
+  50% { transform: scale(1.15); background: #fff3c4; border-color: #f2b632; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

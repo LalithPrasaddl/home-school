@@ -37,6 +37,53 @@ body {
 }
 .back-link:active { opacity: 1; }
 
+/* ---- Pieces shared by the games ---- */
+button { font-family: inherit; touch-action: manipulation; }
+
+.icon-btn {
+  width: 2.6rem;
+  height: 2.6rem;
+  display: grid;
+  place-items: center;
+  font-size: 1.3rem;
+  border-radius: 50%;
+  border: 3px solid var(--accent2);
+  background: var(--card);
+  text-decoration: none;
+  cursor: pointer;
+  padding: 0;
+}
+.icon-btn:active { transform: scale(0.92); }
+
+.new-btn {
+  font-size: 1.4rem;
+  font-weight: 700;
+  padding: 0.8rem 2.2rem;
+  border-radius: 999px;
+  border: none;
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #c94f82;
+}
+.new-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #c94f82; }
+
+/* Emoji confetti, driven by shared/confetti.js */
+.confetti { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+.confetti span {
+  position: absolute;
+  top: -2rem;
+  font-size: 1.6rem;
+  animation: fall linear forwards;
+}
+
+@keyframes pop { 50% { transform: scale(1.12); } }
+@keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .confetti { display: none; }
+}
+
 @media (max-width: 480px) {
   :root { font-size: 17px; }
 }

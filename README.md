@@ -1,6 +1,6 @@
-# ಕನ್ನಡ ಅಕ್ಷರಗಳು — Learn Kannada Letters
+# Learning Corner
 
-A small web app to help a young child learn to recognize and recall written Kannada letters by sound. Built as a plain static site — no framework, no build step, no dependencies.
+Small learning games for young kids: Kannada letters, plus kid-sized versions of word games like Wordle and Strands. Built as a plain static site — no framework, no build step, no dependencies. Phone-first, but works on desktop too.
 
 ## Running it
 
@@ -10,7 +10,11 @@ python3 -m http.server 8000
 
 Then open `http://localhost:8000` and pick a section. (Serving locally is recommended over opening `index.html` directly — some browsers restrict speech/canvas APIs on `file://`.)
 
-## How it works
+## Sections
+
+The home page lists each section as a card with an age badge.
+
+### Kannada Letters (6+)
 
 - **All 49 letters** of the modern Kannada alphabet (13 vowels, 2 yogavaahakas, 34 consonants) are in the practice pool from the start.
 - **Three modes**, chosen from the home screen:
@@ -21,12 +25,24 @@ Then open `http://localhost:8000` and pick a section. (Serving locally is recomm
 - Progress (per-letter history, used to prioritize which letters come up more often) is saved in `localStorage`, so it persists across sessions on the same browser.
 - Audio uses the browser's built-in `speechSynthesis` (Kannada voice if the browser/OS provides one). Pronunciation quality varies by browser — this is a known limitation, not a bug.
 
+### Word Guess (6+)
+
+A Wordle-style game: guess a hidden 3- or 4-letter word in 6 tries. Tiles turn green (right spot), yellow (in the word) or grey (not in the word). Any guess is accepted, so kids can practise spelling freely. After 3 misses a 💡 shows a picture hint. Letters are in ABC order on the keyboard. Sound is off by default (🔇 toggles reading the word aloud).
+
+### Word Hunt (6+)
+
+A Strands-style themed word search: find 4 hidden words (straight across or down) in a 5×5 letter grid, with picture clue cards for each word. Drag across letters or tap them in order. Tapping a clue card makes that word's first letter glow. Puzzles are generated fresh each time from themes like animals, food and things that go.
+
+The word games keep no progress or scores — every round starts fresh.
+
 ## Project structure
 
 - `index.html`, `home.css` — the hub page listing all learning sections
-- `shared/theme.css` — colors/fonts shared by every page
-- `shared/words.js` — kid-safe word list (word + emoji) used by the word games
-- `word-guess/` — Wordle-style word game for kids (3/4-letter words, picture hints)
+- `shared/theme.css` — colors, fonts and game buttons shared by every page
+- `shared/words.js` — kid-safe word list (word + emoji) and Word Hunt themes
+- `shared/confetti.js` — celebration effect used by the games
+- `word-guess/` — Word Guess (Wordle-style)
+- `word-hunt/` — Word Hunt (Strands-style)
 - `kannada/` — the Kannada letters section:
   - `data.js` — the 49 letters (glyph + romanization)
   - `app.js` — quiz logic, question selection, and rendering

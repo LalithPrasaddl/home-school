@@ -1,4 +1,4 @@
-// Kid-safe word list shared by the word games. Every word must be something
+// Kid-safe word list shared by the word games (and THEMES at the bottom). Every word must be something
 // a ~6yo knows and has an unambiguous emoji (used as the picture hint).
 // Word length is derived from `word`; games split it with [...word], so a
 // future Kannada list of plain letters (e.g. 'ಕಮಲ') works the same way.
@@ -47,4 +47,26 @@ const WORDS = [
   { word: 'tent', emoji: '⛺' }, { word: 'baby', emoji: '👶' }, { word: 'girl', emoji: '👧' },
   { word: 'swim', emoji: '🏊' }, { word: 'bath', emoji: '🛁' }, { word: 'bowl', emoji: '🥣' },
   { word: 'fork', emoji: '🍴' },
+
+  // 5 letters (Word Hunt only; Word Guess sticks to 3–4)
+  { word: 'horse', emoji: '🐴' }, { word: 'sheep', emoji: '🐑' }, { word: 'mouse', emoji: '🐭' },
+  { word: 'tiger', emoji: '🐯' }, { word: 'zebra', emoji: '🦓' }, { word: 'snake', emoji: '🐍' },
+  { word: 'whale', emoji: '🐳' }, { word: 'shark', emoji: '🦈' }, { word: 'apple', emoji: '🍎' },
+  { word: 'mango', emoji: '🥭' }, { word: 'bread', emoji: '🍞' }, { word: 'pizza', emoji: '🍕' },
+  { word: 'grape', emoji: '🍇' }, { word: 'lemon', emoji: '🍋' }, { word: 'cloud', emoji: '☁️' },
+  { word: 'train', emoji: '🚂' }, { word: 'truck', emoji: '🚚' }, { word: 'shirt', emoji: '👕' },
+  { word: 'dress', emoji: '👗' }, { word: 'clock', emoji: '⏰' }, { word: 'chair', emoji: '🪑' },
+];
+
+// Themed groups for Word Hunt. Every word here must exist in WORDS above
+// (that's where its emoji comes from) and be at most 5 letters.
+const THEMES = [
+  { title: 'Find the animals!', emoji: '🐾', words: ['cat', 'dog', 'cow', 'pig', 'hen', 'fox', 'owl', 'bee', 'ant', 'bat', 'duck', 'goat', 'lion', 'bear', 'frog', 'fish', 'bird', 'wolf', 'crab', 'horse', 'sheep', 'mouse', 'tiger', 'zebra'] },
+  { title: 'Find the food!', emoji: '🍽️', words: ['egg', 'pie', 'nut', 'tea', 'cake', 'milk', 'corn', 'rice', 'pear', 'kiwi', 'soup', 'taco', 'apple', 'mango', 'bread', 'pizza', 'grape', 'lemon'] },
+  { title: 'Find body parts!', emoji: '🧍', words: ['leg', 'arm', 'ear', 'eye', 'lip', 'hand', 'foot', 'nose'] },
+  { title: 'Look up in the sky!', emoji: '🌤️', words: ['sun', 'star', 'moon', 'rain', 'snow', 'cloud', 'bird', 'bee', 'kite', 'bat'] },
+  { title: 'Things that go!', emoji: '🚦', words: ['bus', 'car', 'van', 'ship', 'boat', 'bike', 'taxi', 'train', 'truck'] },
+  { title: 'Things you wear!', emoji: '👕', words: ['hat', 'cap', 'sock', 'shoe', 'coat', 'ring', 'shirt', 'dress'] },
+  { title: 'Things at home!', emoji: '🏠', words: ['bed', 'box', 'cup', 'key', 'door', 'bowl', 'fork', 'clock', 'chair', 'tub', 'pan'] },
+  { title: 'Under the sea!', emoji: '🌊', words: ['fish', 'crab', 'seal', 'whale', 'shark', 'boat', 'ship'] },
 ];

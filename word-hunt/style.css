@@ -92,14 +92,13 @@
   flex-direction: column;
   align-items: center;
   gap: 0.3rem;
-  padding: 0.6rem 0.4rem;
+  padding: 0.8rem 0.4rem;
   border-radius: 16px;
   border: 3px solid var(--accent2);
   background: var(--card);
   cursor: pointer;
 }
 .clue:active { transform: scale(0.96); }
-.clue-emoji { font-size: 2rem; line-height: 1.1; }
 .slots { display: flex; gap: 3px; }
 .slot {
   width: 1.15rem;

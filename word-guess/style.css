@@ -132,14 +132,19 @@
 /* ---- Keyboard ---- */
 .keyboard {
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 6px;
   user-select: none;
 }
+.key-row { display: flex; gap: 5px; }
+/* Middle row is one key shorter; inset it half a key each side, like Wordle. */
+.key-row:nth-child(2) { padding: 0 calc((100% - 45px) / 20); }
 .key {
+  flex: 1 1 0;
+  min-width: 0;
   height: clamp(44px, 7vh, 58px);
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: 800;
   text-transform: uppercase;
   color: var(--ink);
@@ -154,6 +159,7 @@
 .key.correct { background: var(--good); color: white; box-shadow: 0 3px 0 #388e3c; }
 .key.present { background: var(--present); color: white; box-shadow: 0 3px 0 #c98f12; }
 .key.absent { background: var(--absent); color: white; box-shadow: 0 3px 0 #757b84; }
+.key-back, .key-enter { flex-grow: 1.5; font-size: 1.3rem; }
 .key-back { background: #ffd6e5; box-shadow: 0 3px 0 #e8a3bd; }
 .key-enter { background: #cfe9d0; color: white; box-shadow: 0 3px 0 #a8cfa9; }
 .key-enter.ready { background: var(--good); box-shadow: 0 3px 0 #388e3c; animation: pulse 1s ease-in-out infinite; }

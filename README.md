@@ -27,11 +27,11 @@ The home page lists each section as a card with an age badge.
 
 ### Word Guess (6+)
 
-A Wordle-style game: guess a hidden 3- or 4-letter word in 6 tries. Tiles turn green (right spot), yellow (in the word) or grey (not in the word). Any guess is accepted, so kids can practise spelling freely. After 3 misses a 💡 shows a picture hint. Letters are in ABC order on the keyboard. Sound is off by default (🔇 toggles reading the word aloud).
+A Wordle-style game: guess a hidden 3- or 4-letter word in 6 tries. Tiles turn green (right spot), yellow (in the word) or grey (not in the word). Any guess is accepted, so kids can practise spelling freely. After 3 misses a 💡 shows a picture hint. The on-screen keyboard is QWERTY, like the real Wordle. Sound is off by default (🔇 toggles reading the word aloud).
 
 ### Word Hunt (6+)
 
-A Strands-style themed word search: find 4 hidden words (straight across or down) in a 5×5 letter grid, with picture clue cards for each word. Drag across letters or tap them in order. Tapping a clue card makes that word's first letter glow. Puzzles are generated fresh each time from themes like animals, food and things that go.
+A Strands-style themed word search: find 4 hidden words (straight across or down) in a 5×5 letter grid. Each word has a clue card showing one blank per letter (no pictures, so kids find words from the theme alone). Drag across letters or tap them in order. Tapping a clue card makes that word's first letter glow. Puzzles are generated fresh each time from themes like animals, food and things that go.
 
 ### Busy Bee (6+)
 

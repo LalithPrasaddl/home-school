@@ -59,7 +59,7 @@ const WORDS = [
 ];
 
 // Themed groups for Word Hunt. Every word here must exist in WORDS above
-// (that's where its emoji comes from) and be at most 5 letters.
+// (so it's kid-safe) and be at most 5 letters.
 const THEMES = [
   { title: 'Find the animals!', emoji: '🐾', words: ['cat', 'dog', 'cow', 'pig', 'hen', 'fox', 'owl', 'bee', 'ant', 'bat', 'duck', 'goat', 'lion', 'bear', 'frog', 'fish', 'bird', 'wolf', 'crab', 'horse', 'sheep', 'mouse', 'tiger', 'zebra'] },
   { title: 'Find the food!', emoji: '🍽️', words: ['egg', 'pie', 'nut', 'tea', 'cake', 'milk', 'corn', 'rice', 'pear', 'kiwi', 'soup', 'taco', 'apple', 'mango', 'bread', 'pizza', 'grape', 'lemon'] },

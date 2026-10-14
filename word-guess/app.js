@@ -3,13 +3,11 @@ const HINT_AFTER = 3; // wrong guesses before the 💡 picture hint appears
 const RECENT_LIMIT = 10; // don't repeat any of the last N target words
 const STEP_MS = 280; // delay between tiles flipping
 const FLIP_MS = 420;
-const ALPHABET = 'abcdefghijklmnopqrstuvwxyz'.split('');
-// Alphabetical, 7 per row — kids know ABC order, not QWERTY.
+// QWERTY, laid out like Wordle: ✓ bottom-left, ⌫ bottom-right.
 const KEY_ROWS = [
-  ALPHABET.slice(0, 7),
-  ALPHABET.slice(7, 14),
-  ALPHABET.slice(14, 21),
-  ['back', ...ALPHABET.slice(21), 'enter'],
+  [...'qwertyuiop'],
+  [...'asdfghjkl'],
+  ['enter', ...'zxcvbnm', 'back'],
 ];
 const STATE_RANK = { absent: 1, present: 2, correct: 3 };
 
@@ -85,24 +83,31 @@ function buildBoard() {
 function buildKeyboard() {
   const kb = document.getElementById('keyboard');
   kb.innerHTML = '';
-  KEY_ROWS.flat().forEach((key) => {
-    const btn = document.createElement('button');
-    btn.className = 'key';
-    btn.dataset.key = key;
-    if (key === 'back') {
-      btn.textContent = '⌫';
-      btn.classList.add('key-back');
-      btn.setAttribute('aria-label', 'Delete letter');
-    } else if (key === 'enter') {
-      btn.textContent = '✓';
-      btn.classList.add('key-enter');
-      btn.setAttribute('aria-label', 'Check word');
-    } else {
-      btn.textContent = key;
-    }
-    btn.addEventListener('click', () => handleKey(key));
-    kb.appendChild(btn);
+  KEY_ROWS.forEach((keys) => {
+    const row = document.createElement('div');
+    row.className = 'key-row';
+    keys.forEach((key) => addKey(row, key));
+    kb.appendChild(row);
   });
+}
+
+function addKey(row, key) {
+  const btn = document.createElement('button');
+  btn.className = 'key';
+  btn.dataset.key = key;
+  if (key === 'back') {
+    btn.textContent = '⌫';
+    btn.classList.add('key-back');
+    btn.setAttribute('aria-label', 'Delete letter');
+  } else if (key === 'enter') {
+    btn.textContent = '✓';
+    btn.classList.add('key-enter');
+    btn.setAttribute('aria-label', 'Check word');
+  } else {
+    btn.textContent = key;
+  }
+  btn.addEventListener('click', () => handleKey(key));
+  row.appendChild(btn);
 }
 
 function updateKeyboard() {

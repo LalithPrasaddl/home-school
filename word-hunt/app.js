@@ -7,7 +7,7 @@ const FILLER = 'aeioubcdfghlmnprstw';
 const BLOCKED = ['ass', 'sex', 'tit', 'cum', 'fag', 'shit', 'damn', 'hell', 'piss', 'dick', 'crap', 'poop'];
 const COLORS = 4; // found-word colour classes .found-0 … .found-3
 
-let puzzle = null; // { theme, grid: string[], words: [{ word, emoji, cells: number[] }] }
+let puzzle = null; // { theme, grid: string[], words: [{ word, cells: number[] }] }
 let found = new Set();
 let selection = [];
 let dragging = false;
@@ -15,7 +15,6 @@ let moved = false;
 let pendingToggle = false;
 let lastTheme = null;
 
-const emojiFor = (word) => WORDS.find((w) => w.word === word).emoji;
 const randomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 function shuffle(arr) {
@@ -82,7 +81,7 @@ function makePuzzle() {
     for (const word of chosen) {
       const cells = placeWord(grid, dirs, word);
       if (!cells) break;
-      words.push({ word, emoji: emojiFor(word), cells });
+      words.push({ word, cells });
     }
     if (words.length < chosen.length) continue;
 
@@ -222,7 +221,7 @@ function newPuzzle() {
   found = new Set();
   selection = [];
 
-  document.getElementById('theme-title').textContent = `${puzzle.theme.emoji} ${puzzle.theme.title}`;
+  document.getElementById('theme-title').textContent = puzzle.theme.title;
   document.getElementById('new-btn').classList.add('hidden');
 
   const grid = document.getElementById('grid');
@@ -242,9 +241,6 @@ function newPuzzle() {
     card.className = 'clue';
     card.dataset.word = w.word;
     card.setAttribute('aria-label', `Hint for a ${w.word.length} letter word`);
-    const pic = document.createElement('span');
-    pic.className = 'clue-emoji';
-    pic.textContent = w.emoji;
     const slots = document.createElement('span');
     slots.className = 'slots';
     [...w.word].forEach(() => {
@@ -252,7 +248,7 @@ function newPuzzle() {
       slot.className = 'slot';
       slots.appendChild(slot);
     });
-    card.append(pic, slots);
+    card.append(slots);
     card.addEventListener('click', () => hint(w));
     clues.appendChild(card);
   });

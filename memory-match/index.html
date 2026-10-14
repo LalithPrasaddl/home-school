@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Memory Match</title>
+  <link rel="stylesheet" href="../shared/theme.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="mm">
+    <header class="mm-header">
+      <a class="icon-btn" href="../" aria-label="Back to all games">🏠</a>
+      <h1 class="mm-title">Memory Match</h1>
+      <button id="skip-btn" class="icon-btn" aria-label="New game">🔄</button>
+    </header>
+
+    <main class="mm-main">
+      <p class="mm-sub">Match each picture with its word!</p>
+      <div id="board" class="board"></div>
+      <button id="new-btn" class="new-btn hidden">New game ▶</button>
+    </main>
+  </div>
+
+  <div id="confetti" class="confetti" aria-hidden="true"></div>
+
+  <script src="../shared/words.js"></script>
+  <script src="../shared/confetti.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

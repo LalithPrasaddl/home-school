@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What Comes Next</title>
+  <link rel="stylesheet" href="../shared/theme.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="wn">
+    <header class="wn-header">
+      <a class="icon-btn" href="../" aria-label="Back to all games">🏠</a>
+      <h1 class="wn-title">What comes next?</h1>
+      <button id="skip-btn" class="icon-btn" aria-label="Skip to a new pattern">🔄</button>
+    </header>
+
+    <main class="wn-main">
+      <div id="sequence" class="sequence" aria-live="polite"></div>
+      <div id="message" class="message"></div>
+      <div id="choices" class="choices"></div>
+    </main>
+  </div>
+
+  <div id="confetti" class="confetti" aria-hidden="true"></div>
+
+  <script src="../shared/confetti.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

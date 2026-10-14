@@ -37,7 +37,15 @@ A Strands-style themed word search: find 4 hidden words (straight across or down
 
 A Spelling Bee-style game: make words from 5 letters arranged as a flower. Every word must use the yellow centre letter and be at least 3 letters long; letters can be reused. Each hidden word has a picture clue card with one blank per letter, and tapping a card reveals its first letter. A bee flies along the top towards a sunflower as words are found. Puzzles are generated from the shared word list, so every answer is a word with a picture.
 
-The word games keep no progress or scores — every round starts fresh.
+### Memory Match (6+)
+
+16 face-down cards: flip two at a time to match each picture with its word (🐸 ↔ FROG). Matches stay face-up in green; misses flip back after a second.
+
+### What Comes Next? (6+)
+
+Spot the pattern and pick what comes next from 3 choices — emoji patterns (🔴🔵🔴🔵 ❓, 🍎🍎🍌 …) and counting patterns (2, 4, 6, 8 ❓ by 1s, 2s, 5s and 10s). A wrong pick greys out so the kid can try again; a right one fills the ❓ and moves on. Confetti every 5 in a row.
+
+The games keep no progress or scores — every round starts fresh.
 
 ## Project structure
 
@@ -48,6 +56,8 @@ The word games keep no progress or scores — every round starts fresh.
 - `word-guess/` — Word Guess (Wordle-style)
 - `word-hunt/` — Word Hunt (Strands-style)
 - `busy-bee/` — Busy Bee (Spelling Bee-style)
+- `memory-match/` — Memory Match (picture ↔ word pairs)
+- `what-next/` — What Comes Next? (pattern spotting)
 - `kannada/` — the Kannada letters section:
   - `data.js` — the 49 letters (glyph + romanization)
   - `app.js` — quiz logic, question selection, and rendering

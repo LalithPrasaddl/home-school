@@ -1,0 +1,95 @@
+.mm {
+  width: 100%;
+  max-width: 560px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.mm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  padding: 0.6rem 16px;
+}
+.mm-title { margin: 0; font-size: 1.25rem; text-align: center; flex: 1; }
+
+.mm-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0 16px 1.2rem;
+}
+.mm-sub { margin: 0; opacity: 0.8; text-align: center; }
+
+/* ---- Cards ---- */
+.board {
+  --card-size: min(20vw, 14vh, 108px);
+  display: grid;
+  grid-template-columns: repeat(4, var(--card-size));
+  gap: 8px;
+}
+@supports (height: 1dvh) {
+  .board { --card-size: min(20vw, 14dvh, 108px); }
+}
+
+.card {
+  width: var(--card-size);
+  height: calc(var(--card-size) * 1.15);
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  perspective: 600px;
+}
+.card-inner {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.35s ease;
+  transform-style: preserve-3d;
+}
+.card.flipped .card-inner { transform: rotateY(180deg); }
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.card-back {
+  background: var(--accent2);
+  box-shadow: 0 4px 0 #5aa3ab;
+  font-size: calc(var(--card-size) * 0.32);
+}
+.card:active .card-back { transform: translateY(2px); }
+.card-front {
+  transform: rotateY(180deg);
+  background: #ffffff;
+  border: 3px solid var(--accent2);
+  color: var(--ink);
+}
+.card-front.pic { font-size: calc(var(--card-size) * 0.5); }
+.card-front.word {
+  font-size: calc(var(--card-size) * 0.24);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.card.matched .card-front { background: #d9f2d6; border-color: var(--good); }
+/* Pop the button, not a face: the faces' own transforms do the flip. */
+.card.matched { animation: pop 0.3s ease 0.35s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .card-inner { transition: none; }
+  .card.matched { animation: none; }
+}

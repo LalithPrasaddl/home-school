@@ -6,8 +6,10 @@ const FILLER = 'aeioubcdfghlmnprstw';
 // Filler can accidentally spell things across a row/column; reject those grids.
 const BLOCKED = ['ass', 'sex', 'tit', 'cum', 'fag', 'shit', 'damn', 'hell', 'piss', 'dick', 'crap', 'poop'];
 const COLORS = 4; // found-word colour classes .found-0 … .found-3
+// [rowStep, colStep] for the 4 line directions; each word also may run backwards.
+const AXES = [[0, 1], [1, 0], [1, 1], [1, -1]];
 
-let puzzle = null; // { theme, grid: string[], words: [{ word, cells: number[] }] }
+let puzzle = null; // { theme, grid: string[], words: [{ word, emoji, cells: number[] }] }
 let found = new Set();
 let selection = [];
 let dragging = false;
@@ -15,6 +17,7 @@ let moved = false;
 let pendingToggle = false;
 let lastTheme = null;
 
+const emojiFor = (word) => WORDS.find((w) => w.word === word).emoji;
 const randomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 function shuffle(arr) {
@@ -25,18 +28,21 @@ function shuffle(arr) {
   return arr;
 }
 
-// Every left-to-right row and top-to-bottom column as a string, which is
-// every direction a kid can select in.
+const inGrid = (r, c) => r >= 0 && r < SIZE && c >= 0 && c < SIZE;
+
+// Every row, column and diagonal as a string, both forwards and backwards,
+// which is every direction a kid can select in.
 function lines(grid) {
   const out = [];
-  for (let i = 0; i < SIZE; i++) {
-    let row = '';
-    let col = '';
-    for (let j = 0; j < SIZE; j++) {
-      row += grid[i * SIZE + j];
-      col += grid[j * SIZE + i];
+  for (const [dr, dc] of AXES) {
+    for (let r = 0; r < SIZE; r++) {
+      for (let c = 0; c < SIZE; c++) {
+        if (inGrid(r - dr, c - dc)) continue; // only start at the line's edge
+        let line = '';
+        for (let rr = r, cc = c; inGrid(rr, cc); rr += dr, cc += dc) line += grid[rr * SIZE + cc];
+        if (line.length > 1) out.push(line, [...line].reverse().join(''));
+      }
     }
-    out.push(row, col);
   }
   return out;
 }
@@ -49,39 +55,45 @@ function countIn(lineList, word) {
   return n;
 }
 
-// Words go straight across (left→right) or down (top→bottom). Words may cross
-// and share a letter, but never run along each other in the same direction.
-function placeWord(grid, dirs, word) {
+// Words go across, down or diagonally, forwards or backwards. Words may cross
+// and share a letter, but never run along each other on the same line axis.
+// `cells` stays in reading order, so cells[0] is always the word's first letter.
+function placeWord(grid, axes, word) {
   const letters = [...word];
   const len = letters.length;
-  for (let tries = 0; tries < 60; tries++) {
-    const across = Math.random() < 0.5;
-    const step = across ? 1 : SIZE;
-    const r = Math.floor(Math.random() * (across ? SIZE : SIZE - len + 1));
-    const c = Math.floor(Math.random() * (across ? SIZE - len + 1 : SIZE));
-    const cells = letters.map((_, i) => r * SIZE + c + i * step);
-    const fits = cells.every((idx, i) => grid[idx] === null || (grid[idx] === letters[i] && dirs[idx] !== step));
+  for (let tries = 0; tries < 100; tries++) {
+    const axis = Math.floor(Math.random() * AXES.length);
+    const sign = Math.random() < 0.5 ? 1 : -1;
+    const [dr, dc] = AXES[axis].map((d) => d * sign);
+    const r = Math.floor(Math.random() * SIZE);
+    const c = Math.floor(Math.random() * SIZE);
+    if (!inGrid(r + dr * (len - 1), c + dc * (len - 1))) continue;
+    const cells = letters.map((_, i) => (r + dr * i) * SIZE + c + dc * i);
+    const fits = cells.every((idx, i) => grid[idx] === null || (grid[idx] === letters[i] && axes[idx] !== axis));
     if (!fits) continue;
     cells.forEach((idx, i) => {
       grid[idx] = letters[i];
-      dirs[idx] = step;
+      axes[idx] = axis;
     });
     return cells;
   }
   return null;
 }
 
+// A palindrome (e.g. "eye") reads the same both ways, so its one placement shows up twice.
+const isPalindrome = (w) => w === [...w].reverse().join('');
+
 function makePuzzle() {
   for (let attempt = 0; attempt < 500; attempt++) {
     const theme = randomItem(THEMES.filter((t) => t !== lastTheme));
     const chosen = shuffle([...theme.words]).slice(0, WORDS_PER_PUZZLE);
     const grid = Array(SIZE * SIZE).fill(null);
-    const dirs = Array(SIZE * SIZE).fill(null);
+    const axes = Array(SIZE * SIZE).fill(null);
     const words = [];
     for (const word of chosen) {
-      const cells = placeWord(grid, dirs, word);
+      const cells = placeWord(grid, axes, word);
       if (!cells) break;
-      words.push({ word, cells });
+      words.push({ word, emoji: emojiFor(word), cells });
     }
     if (words.length < chosen.length) continue;
 
@@ -89,7 +101,7 @@ function makePuzzle() {
 
     const all = lines(grid);
     const clean =
-      chosen.every((w) => countIn(all, w) === 1) &&
+      chosen.every((w) => countIn(all, w) === (isPalindrome(w) ? 2 : 1)) &&
       theme.words.filter((w) => !chosen.includes(w)).every((w) => countIn(all, w) === 0) &&
       BLOCKED.every((w) => countIn(all, w) === 0);
     if (!clean) continue;
@@ -110,18 +122,26 @@ function render() {
   selection.forEach((idx) => els[idx].classList.add('selected'));
 }
 
+const stepBetween = (a, b) => [Math.floor(b / SIZE) - Math.floor(a / SIZE), (b % SIZE) - (a % SIZE)];
+
+// The next letter must touch the last one (any of 8 neighbours), then keep
+// going the same way as the first step.
 function canExtend(idx) {
   if (!selection.length) return false;
-  const last = selection[selection.length - 1];
-  const right = last % SIZE < SIZE - 1 ? last + 1 : -1;
-  const down = last + SIZE < SIZE * SIZE ? last + SIZE : -1;
-  if (selection.length === 1) return idx === right || idx === down;
-  return idx === (selection[1] - selection[0] === 1 ? right : down);
+  const [dr, dc] = stepBetween(selection[selection.length - 1], idx);
+  if (selection.length === 1) return Math.max(Math.abs(dr), Math.abs(dc)) === 1;
+  const [r0, c0] = stepBetween(selection[0], selection[1]);
+  return dr === r0 && dc === c0;
 }
 
+// A word counts whichever end the kid starts from.
 function checkSelection() {
+  const n = selection.length;
   const match = puzzle.words.find(
-    (w) => !found.has(w.word) && w.cells.length === selection.length && w.cells.every((idx, i) => idx === selection[i]),
+    (w) =>
+      !found.has(w.word) &&
+      w.cells.length === n &&
+      (w.cells.every((idx, i) => idx === selection[i]) || w.cells.every((idx, i) => idx === selection[n - 1 - i])),
   );
   if (match) markFound(match);
   return Boolean(match);
@@ -160,9 +180,15 @@ function rejectSelection() {
   render();
 }
 
+// Only count the round middle of a cell, so a diagonal drag that clips the
+// corner of a neighbouring cell doesn't pick it up.
 function cellAt(x, y) {
   const el = document.elementFromPoint(x, y);
-  return el && el.classList.contains('cell') ? Number(el.dataset.idx) : null;
+  if (!el || !el.classList.contains('cell')) return null;
+  const box = el.getBoundingClientRect();
+  const dx = x - (box.left + box.width / 2);
+  const dy = y - (box.top + box.height / 2);
+  return Math.hypot(dx, dy) <= box.width * 0.45 ? Number(el.dataset.idx) : null;
 }
 
 function onPointerDown(e) {
@@ -221,7 +247,7 @@ function newPuzzle() {
   found = new Set();
   selection = [];
 
-  document.getElementById('theme-title').textContent = puzzle.theme.title;
+  document.getElementById('theme-title').textContent = `${puzzle.theme.emoji} ${puzzle.theme.title}`;
   document.getElementById('new-btn').classList.add('hidden');
 
   const grid = document.getElementById('grid');
@@ -241,6 +267,9 @@ function newPuzzle() {
     card.className = 'clue';
     card.dataset.word = w.word;
     card.setAttribute('aria-label', `Hint for a ${w.word.length} letter word`);
+    const pic = document.createElement('span');
+    pic.className = 'clue-emoji';
+    pic.textContent = w.emoji;
     const slots = document.createElement('span');
     slots.className = 'slots';
     [...w.word].forEach(() => {
@@ -248,7 +277,7 @@ function newPuzzle() {
       slot.className = 'slot';
       slots.appendChild(slot);
     });
-    card.append(slots);
+    card.append(pic, slots);
     card.addEventListener('click', () => hint(w));
     clues.appendChild(card);
   });

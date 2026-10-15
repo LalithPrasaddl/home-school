@@ -158,14 +158,13 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.4rem 0.5rem;
+  padding: 0.7rem 0.5rem;
   border-radius: 14px;
   border: 3px solid var(--petal-edge);
   background: var(--card);
   cursor: pointer;
 }
 .clue:active { transform: scale(0.96); }
-.clue-emoji { font-size: 1.6rem; line-height: 1.1; }
 .slots { display: flex; gap: 3px; }
 .slot {
   width: 1rem;

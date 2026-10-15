@@ -7,7 +7,7 @@ const RECENT_LIMIT = 15;
 const MESSAGE_MS = 1600;
 
 let puzzles = [];
-let puzzle = null; // { center, petals: string[], words: [{ word, emoji }] }
+let puzzle = null; // { center, petals: string[], words: [{ word }] }
 let found = new Set();
 let typed = [];
 let recent = [];
@@ -49,7 +49,7 @@ function buildPuzzles() {
           key: `${mask}:${center}`,
           center,
           petals: alphabet.filter((ch, j) => j !== i && mask & (1 << j)),
-          words: answers.map(({ word, emoji }) => ({ word, emoji })),
+          words: answers.map(({ word }) => ({ word })),
         });
       });
       return;
@@ -183,9 +183,6 @@ function renderClues() {
       card.className = 'clue';
       card.dataset.word = w.word;
       card.setAttribute('aria-label', `Hint for a ${w.word.length} letter word`);
-      const pic = document.createElement('span');
-      pic.className = 'clue-emoji';
-      pic.textContent = w.emoji;
       const slots = document.createElement('span');
       slots.className = 'slots';
       [...w.word].forEach(() => {
@@ -193,7 +190,7 @@ function renderClues() {
         slot.className = 'slot';
         slots.appendChild(slot);
       });
-      card.append(pic, slots);
+      card.append(slots);
       card.addEventListener('click', () => hint(card, w));
       clues.appendChild(card);
     });

@@ -47,6 +47,15 @@ Spot the pattern and pick what comes next from 3 choices — emoji patterns (�
 
 The games keep no progress or scores — every round starts fresh.
 
+### Maths Olympiad (Class 1)
+
+Mock papers modelled on the Silverzone International Olympiad of Mathematics (iOM) Level 1, Class 1 paper: 25 multiple-choice questions (A–D), 40 minutes, 100 marks, no negative marking, in the same sections as the real paper — Number Sense, Computation, Patterns, Money & Time, Length & Weight, Shapes (3.5 marks each), Reasoning & Aptitude (4.5) and Scholar's Zone (5). There are 20 papers; each is generated from its number, so a paper is the same every time and can be retaken.
+
+- **📝 Mock test** — a 40-minute timer, jump between questions with the numbered dots, answers shown only at the end.
+- **🌱 Practice** — right/wrong (with a short explanation) straight after each answer.
+
+The results screen shows marks per section and every question with the right answer. The best score per paper is saved in `localStorage`. 🔊 reads the question aloud.
+
 ## Project structure
 
 - `index.html`, `home.css` — the hub page listing all learning sections
@@ -58,6 +67,7 @@ The games keep no progress or scores — every round starts fresh.
 - `busy-bee/` — Busy Bee (Spelling Bee-style)
 - `memory-match/` — Memory Match (picture ↔ word pairs)
 - `what-next/` — What Comes Next? (pattern spotting)
+- `olympiad/` — Maths Olympiad mock papers (`questions.js` builds the questions, `app.js` runs the test)
 - `kannada/` — the Kannada letters section:
   - `data.js` — the 49 letters (glyph + romanization)
   - `app.js` — quiz logic, question selection, and rendering

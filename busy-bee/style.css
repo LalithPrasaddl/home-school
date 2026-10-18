@@ -139,10 +139,11 @@
 .action:active { transform: translateY(2px); }
 .action-back { background: #ffd6e5; box-shadow: 0 3px 0 #e8a3bd; }
 .action-shuffle { background: #e3e8ef; box-shadow: 0 3px 0 #c3cad4; }
+.action-hint { background: #fff3c4; box-shadow: 0 3px 0 #e6cf7a; }
 .action-enter { background: #cfe9d0; color: white; box-shadow: 0 3px 0 #a8cfa9; }
 .action-enter.ready { background: var(--good); box-shadow: 0 3px 0 #388e3c; animation: pulse 1s ease-in-out infinite; }
 
-/* ---- Clue cards: picture + one blank per letter ---- */
+/* ---- Clue cards: one blank per letter ---- */
 .clues {
   width: 100%;
   display: grid;
@@ -151,23 +152,26 @@
   margin-top: 0.4rem;
 }
 @media (min-width: 600px) {
-  .clues { grid-template-columns: repeat(4, 1fr); }
+  .clues { grid-template-columns: repeat(3, 1fr); }
 }
 .clue {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.7rem 0.5rem;
+  min-width: 0;
+  padding: 0.7rem 0.3rem;
   border-radius: 14px;
   border: 3px solid var(--petal-edge);
   background: var(--card);
   cursor: pointer;
 }
 .clue:active { transform: scale(0.96); }
-.slots { display: flex; gap: 3px; }
+.slots { display: flex; gap: 3px; min-width: 0; }
+/* Slots shrink a little so 8-letter words still fit a phone-width card. */
 .slot {
-  width: 1rem;
+  flex: 0 1 1rem;
+  min-width: 0.7rem;
   height: 1.3rem;
   display: grid;
   place-items: center;

@@ -1,14 +1,16 @@
 const HIVE_SIZE = 5; // centre letter + 4 petals
 const MIN_LEN = 3;
-const MIN_WORDS = 4;
-const MAX_WORDS = 8; // keeps the clue cards to 4 rows on a phone
+const MIN_WORDS = 6;
+const MAX_WORDS = 12; // keeps the clue cards to 6 rows on a phone
 const MAX_TYPED = 8;
+const MAX_TRIES = 500;
 const RECENT_LIMIT = 15;
 const MESSAGE_MS = 1600;
 
-let puzzles = [];
+let index = null; // { bit, byMask: Map<mask, string[]>, seeds: { word, mask }[] }
 let puzzle = null; // { center, petals: string[], words: [{ word }] }
 let found = new Set();
+let revealed = new Map(); // word -> how many letters a hint has shown
 let typed = [];
 let recent = [];
 let messageTimer = null;
@@ -23,41 +25,52 @@ function shuffle(arr) {
   return arr;
 }
 
-// Find every hive (5 letters + a centre) where 4–8 picture words can be
-// spelled using only hive letters and always the centre letter, and where
-// every petal is used by at least one answer. Letters are tracked as bitmasks
-// over the alphabet the word list actually uses, so this runs in ~10ms.
-function buildPuzzles() {
-  const alphabet = [...new Set(WORDS.flatMap((w) => [...w.word]))].sort();
+// Every real word counts, not just the picture-list ones, so the answers are
+// all DICTIONARY (+ WORDS) entries that fit the hive. Words are grouped by
+// the bitmask of letters they use; a hive's answers are then just the groups
+// for each subset of its 5 letters that includes the centre.
+function buildIndex() {
+  const all = [...new Set([...DICTIONARY, ...WORDS.map((w) => w.word)])].filter((w) => {
+    const len = [...w].length;
+    return len >= MIN_LEN && len <= MAX_TYPED;
+  });
+  const alphabet = [...new Set(all.flatMap((w) => [...w]))].sort();
   const bit = (ch) => 1 << alphabet.indexOf(ch);
-  const words = WORDS.filter((w) => [...w.word].length >= MIN_LEN).map((w) => ({
-    ...w,
-    mask: [...w.word].reduce((m, ch) => m | bit(ch), 0),
-  }));
-  const out = [];
+  const byMask = new Map();
+  const seeds = [];
+  all.forEach((word) => {
+    const mask = [...word].reduce((m, ch) => m | bit(ch), 0);
+    const size = new Set(word).size;
+    if (size > HIVE_SIZE) return;
+    if (!byMask.has(mask)) byMask.set(mask, []);
+    byMask.get(mask).push(word);
+    if (size === HIVE_SIZE) seeds.push({ word, mask });
+  });
+  return { bit, byMask, seeds };
+}
 
-  const visit = (start, left, mask) => {
-    if (left === 0) {
-      const fit = words.filter((w) => (w.mask & mask) === w.mask);
-      if (fit.length < MIN_WORDS) return;
-      alphabet.forEach((center, i) => {
-        if (!(mask & (1 << i))) return;
-        const answers = fit.filter((w) => w.mask & (1 << i));
-        const used = answers.reduce((m, w) => m | w.mask, 0);
-        if (answers.length < MIN_WORDS || answers.length > MAX_WORDS || used !== mask) return;
-        out.push({
-          key: `${mask}:${center}`,
-          center,
-          petals: alphabet.filter((ch, j) => j !== i && mask & (1 << j)),
-          words: answers.map(({ word }) => ({ word })),
-        });
-      });
-      return;
+// Seed each hive from a word using exactly 5 different letters, so there's
+// always a "whole flower" word and every petal is used by some answer.
+function pickHive() {
+  for (let tries = 0; ; tries++) {
+    const seed = randomItem(index.seeds);
+    const letters = [...new Set(seed.word)];
+    const center = randomItem(letters);
+    const key = `${seed.mask}:${center}`;
+    if (recent.includes(key) && tries < MAX_TRIES) continue;
+    const centerBit = index.bit(center);
+    const words = [];
+    for (let sub = seed.mask; sub; sub = (sub - 1) & seed.mask) {
+      if (sub & centerBit) words.push(...(index.byMask.get(sub) || []));
     }
-    for (let i = start; i < alphabet.length; i++) visit(i + 1, left - 1, mask | (1 << i));
-  };
-  visit(0, HIVE_SIZE, 0);
-  return out;
+    if ((words.length < MIN_WORDS || words.length > MAX_WORDS) && tries < MAX_TRIES) continue;
+    return {
+      key,
+      center,
+      petals: letters.filter((ch) => ch !== center),
+      words: words.map((word) => ({ word })),
+    };
+  }
 }
 
 function showMessage(text) {
@@ -144,7 +157,7 @@ function submitWord() {
     restartAnimation(card, 'wiggle');
     return rejectWord('You found that one! ✓');
   }
-  if (!card) return rejectWord('Try another word! 🙂');
+  if (!card) return rejectWord('Not in my word list! 🙂');
 
   found.add(word);
   typed = [];
@@ -159,17 +172,35 @@ function submitWord() {
     showMessage('All done! 🌻');
     celebrate('🐝');
     document.getElementById('new-btn').classList.remove('hidden');
+  } else if (new Set(word).size === HIVE_SIZE) {
+    showMessage('Whole flower! 🌻');
   } else {
     showMessage(randomItem(['Yay! 🐝', 'Great! ⭐', 'Buzz buzz! 🐝', 'You got it! 🎉']));
   }
 }
 
-// Tapping a clue card fills in that word's first letter.
-function hint(card, w) {
-  if (found.has(w.word)) return;
-  const first = card.querySelector('.slot');
-  first.textContent = [...w.word][0];
-  first.classList.add('hinted');
+// A hint shows one more letter of a word, but never the last one, so the
+// kid still has to finish it. Returns false if that word has no hints left.
+function hint(card, word) {
+  const letters = [...word];
+  const shown = revealed.get(word) || 0;
+  if (found.has(word) || shown >= letters.length - 1) return false;
+  revealed.set(word, shown + 1);
+  const slot = card.querySelectorAll('.slot')[shown];
+  slot.textContent = letters[shown];
+  slot.classList.add('hinted');
+  restartAnimation(card, 'wiggle');
+  return true;
+}
+
+// The 💡 button hints the word with the fewest letters shown so far
+// (shortest first, matching the card order), so first letters come before
+// second letters.
+function hintNext() {
+  const cards = [...document.querySelectorAll('.clue:not(.found)')];
+  if (!cards.length) return;
+  const byShown = cards.sort((a, b) => (revealed.get(a.dataset.word) || 0) - (revealed.get(b.dataset.word) || 0));
+  if (!byShown.some((card) => hint(card, card.dataset.word))) showMessage('No more hints! 🙂');
 }
 
 function renderClues() {
@@ -191,19 +222,19 @@ function renderClues() {
         slots.appendChild(slot);
       });
       card.append(slots);
-      card.addEventListener('click', () => hint(card, w));
+      card.addEventListener('click', () => hint(card, w.word));
       clues.appendChild(card);
     });
 }
 
 function newPuzzle() {
-  const fresh = puzzles.filter((p) => !recent.includes(p.key));
-  puzzle = randomItem(fresh.length ? fresh : puzzles);
+  puzzle = pickHive();
   recent.push(puzzle.key);
   if (recent.length > RECENT_LIMIT) recent.shift();
   puzzle = { ...puzzle, petals: shuffle([...puzzle.petals]) };
 
   found = new Set();
+  revealed = new Map();
   typed = [];
   document.getElementById('new-btn').classList.add('hidden');
   document.getElementById('message').classList.remove('show');
@@ -214,11 +245,12 @@ function newPuzzle() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  puzzles = buildPuzzles();
+  index = buildIndex();
   newPuzzle();
 
   document.getElementById('back-btn').addEventListener('click', deleteLetter);
   document.getElementById('enter-btn').addEventListener('click', submitWord);
+  document.getElementById('hint-btn').addEventListener('click', hintNext);
   document.getElementById('shuffle-btn').addEventListener('click', () => {
     shuffle(puzzle.petals);
     renderFlower();

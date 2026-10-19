@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ottakshara</title>
+  <link rel="stylesheet" href="../shared/theme.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="ot">
+    <header class="ot-header">
+      <a class="icon-btn" href="../" aria-label="Back to all games">🏠</a>
+      <h1 class="ot-title">ಒತ್ತಕ್ಷರ</h1>
+      <button id="menu-btn" class="icon-btn" aria-label="Back to levels">↩️</button>
+    </header>
+
+    <main class="ot-main">
+      <!-- Pick a level -->
+      <section id="menu-screen" class="screen">
+        <p class="ot-sub">Letters that sit under letters</p>
+        <div id="levels" class="levels"></div>
+        <button id="learn-btn" class="learn-btn">📚 See the words &amp; make your own</button>
+      </section>
+
+      <!-- Word cards + build-your-own -->
+      <section id="learn-screen" class="screen hidden">
+        <div class="builder">
+          <select id="first" class="pick" aria-label="Top letter"></select>
+          <span class="op">+</span>
+          <select id="second" class="pick" aria-label="Letter underneath"></select>
+          <span class="op">=</span>
+          <button id="built" class="built" aria-label="Hear it"></button>
+        </div>
+        <div id="kagunita" class="kagunita"></div>
+        <div id="tabs" class="tabs"></div>
+        <div id="word-list" class="word-list"></div>
+      </section>
+
+      <!-- A round of questions -->
+      <section id="quiz-screen" class="screen hidden">
+        <div id="pips" class="pips"></div>
+        <p id="prompt" class="prompt"></p>
+        <div id="card" class="q-card"></div>
+        <div id="message" class="message"></div>
+        <div id="choices" class="choices"></div>
+      </section>
+
+      <section id="done-screen" class="screen hidden">
+        <div id="stars" class="stars"></div>
+        <p id="score" class="score"></p>
+        <button id="again-btn" class="new-btn">Play again ▶</button>
+        <button id="levels-btn" class="learn-btn">Pick another level</button>
+      </section>
+    </main>
+  </div>
+
+  <div id="confetti" class="confetti" aria-hidden="true"></div>
+
+  <script src="data.js"></script>
+  <script src="../shared/confetti.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

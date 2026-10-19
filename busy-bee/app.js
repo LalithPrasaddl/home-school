@@ -8,8 +8,10 @@ const RECENT_LIMIT = 15;
 const MESSAGE_MS = 1600;
 
 let index = null; // { bit, byMask: Map<mask, string[]>, seeds: { word, mask }[] }
+let bonusWords = null; // Set of BONUS words: accepted, but no clue card
 let puzzle = null; // { center, petals: string[], words: [{ word }] }
 let found = new Set();
+let foundBonus = [];
 let revealed = new Map(); // word -> how many letters a hint has shown
 let typed = [];
 let recent = [];
@@ -157,6 +159,8 @@ function submitWord() {
     restartAnimation(card, 'wiggle');
     return rejectWord('You found that one! ✓');
   }
+  if (!card && foundBonus.includes(word)) return rejectWord('You found that one! ✓');
+  if (!card && bonusWords.has(word)) return addBonus(word);
   if (!card) return rejectWord('Not in my word list! 🙂');
 
   found.add(word);
@@ -177,6 +181,22 @@ function submitWord() {
   } else {
     showMessage(randomItem(['Yay! 🐝', 'Great! ⭐', 'Buzz buzz! 🐝', 'You got it! 🎉']));
   }
+}
+
+// A real word that isn't one of the clue cards: cheer it and list it under
+// the cards, but it doesn't move the bee along.
+function addBonus(word) {
+  foundBonus.push(word);
+  typed = [];
+  renderWord();
+  renderBonus();
+  showMessage(new Set(word).size === HIVE_SIZE ? 'Whole flower bonus! 🌻⭐' : 'Bonus word! ⭐');
+}
+
+function renderBonus() {
+  const el = document.getElementById('bonus');
+  el.classList.toggle('hidden', !foundBonus.length);
+  el.textContent = `⭐ Bonus words: ${foundBonus.join(', ')}`;
 }
 
 // A hint shows one more letter of a word, but never the last one, so the
@@ -234,6 +254,7 @@ function newPuzzle() {
   puzzle = { ...puzzle, petals: shuffle([...puzzle.petals]) };
 
   found = new Set();
+  foundBonus = [];
   revealed = new Map();
   typed = [];
   document.getElementById('new-btn').classList.add('hidden');
@@ -241,11 +262,13 @@ function newPuzzle() {
   renderFlower();
   renderWord();
   renderClues();
+  renderBonus();
   renderTrack();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   index = buildIndex();
+  bonusWords = new Set(BONUS);
   newPuzzle();
 
   document.getElementById('back-btn').addEventListener('click', deleteLetter);

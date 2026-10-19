@@ -185,6 +185,16 @@
 .clue.found .slot { border-bottom-color: transparent; }
 .clue.wiggle { animation: wiggle 0.6s ease; }
 
+/* Real words that aren't clue cards. */
+.bonus {
+  width: 100%;
+  margin: 0.6rem 0 0;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
 @keyframes blink { 50% { opacity: 0; } }
 @keyframes shake {
   20%, 60% { transform: translateX(-8px); }

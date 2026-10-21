@@ -58,15 +58,17 @@ const WORDS = [
   { word: 'dress', emoji: '👗' }, { word: 'clock', emoji: '⏰' }, { word: 'chair', emoji: '🪑' },
 ];
 
-// Themed groups for Word Hunt. Every word here must exist in WORDS above
-// (so it's kid-safe) and be at most 5 letters.
+// Themed groups for Word Hunt and Groups. Every word here must exist in WORDS
+// above (so it's kid-safe) and be at most 5 letters. List a word under every
+// theme it fits (a whale is an animal too): Groups never deals a word that
+// belongs to two of its groups, so a missing entry makes a puzzle ambiguous.
 const THEMES = [
-  { title: 'Find the animals!', emoji: '🐾', words: ['cat', 'dog', 'cow', 'pig', 'hen', 'fox', 'owl', 'bee', 'ant', 'bat', 'duck', 'goat', 'lion', 'bear', 'frog', 'fish', 'bird', 'wolf', 'crab', 'horse', 'sheep', 'mouse', 'tiger', 'zebra'] },
-  { title: 'Find the food!', emoji: '🍽️', words: ['egg', 'pie', 'nut', 'tea', 'cake', 'milk', 'corn', 'rice', 'pear', 'kiwi', 'soup', 'taco', 'apple', 'mango', 'bread', 'pizza', 'grape', 'lemon'] },
-  { title: 'Find body parts!', emoji: '🧍', words: ['leg', 'arm', 'ear', 'eye', 'lip', 'hand', 'foot', 'nose'] },
-  { title: 'Look up in the sky!', emoji: '🌤️', words: ['sun', 'star', 'moon', 'rain', 'snow', 'cloud', 'bird', 'bee', 'kite', 'bat'] },
-  { title: 'Things that go!', emoji: '🚦', words: ['bus', 'car', 'van', 'ship', 'boat', 'bike', 'taxi', 'train', 'truck'] },
-  { title: 'Things you wear!', emoji: '👕', words: ['hat', 'cap', 'sock', 'shoe', 'coat', 'ring', 'shirt', 'dress'] },
-  { title: 'Things at home!', emoji: '🏠', words: ['bed', 'box', 'cup', 'key', 'door', 'bowl', 'fork', 'clock', 'chair', 'tub', 'pan'] },
-  { title: 'Under the sea!', emoji: '🌊', words: ['fish', 'crab', 'seal', 'whale', 'shark', 'boat', 'ship'] },
+  { title: 'Find the animals!', label: 'Animals', emoji: '🐾', words: ['cat', 'dog', 'cow', 'pig', 'hen', 'fox', 'owl', 'bee', 'ant', 'bat', 'ram', 'ape', 'bug', 'rat', 'fly', 'duck', 'goat', 'lion', 'bear', 'deer', 'frog', 'fish', 'bird', 'wolf', 'crab', 'seal', 'swan', 'worm', 'horse', 'sheep', 'mouse', 'tiger', 'zebra', 'snake', 'whale', 'shark'] },
+  { title: 'Find the food!', label: 'Food', emoji: '🍽️', words: ['egg', 'pie', 'nut', 'tea', 'cake', 'milk', 'corn', 'rice', 'pear', 'kiwi', 'soup', 'taco', 'apple', 'mango', 'bread', 'pizza', 'grape', 'lemon'] },
+  { title: 'Find body parts!', label: 'Body parts', emoji: '🧍', words: ['leg', 'arm', 'ear', 'eye', 'lip', 'hand', 'foot', 'nose'] },
+  { title: 'Look up in the sky!', label: 'In the sky', emoji: '🌤️', words: ['sun', 'star', 'moon', 'rain', 'snow', 'cloud', 'bird', 'bee', 'kite', 'bat'] },
+  { title: 'Things that go!', label: 'Things that go', emoji: '🚦', words: ['bus', 'car', 'van', 'ship', 'boat', 'bike', 'taxi', 'train', 'truck'] },
+  { title: 'Things you wear!', label: 'Things you wear', emoji: '👕', words: ['hat', 'cap', 'sock', 'shoe', 'coat', 'ring', 'shirt', 'dress'] },
+  { title: 'Things at home!', label: 'Things at home', emoji: '🏠', words: ['bed', 'box', 'cup', 'key', 'door', 'bowl', 'fork', 'clock', 'chair', 'tub', 'pan'] },
+  { title: 'Under the sea!', label: 'Under the sea', emoji: '🌊', words: ['fish', 'crab', 'seal', 'whale', 'shark', 'boat', 'ship'] },
 ];

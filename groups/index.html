@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Groups</title>
+  <link rel="stylesheet" href="../shared/theme.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="gr">
+    <header class="gr-header">
+      <a class="icon-btn" href="../" aria-label="Back to all games">🏠</a>
+      <div class="count-picker" role="group" aria-label="How many groups">
+        <button class="count-chip" data-groups="3">3 groups</button>
+        <button class="count-chip" data-groups="4">4 groups</button>
+      </div>
+      <button id="skip-btn" class="icon-btn" aria-label="New game">🔄</button>
+    </header>
+
+    <main class="gr-main">
+      <p class="gr-sub">Find groups of 4 that go together!</p>
+      <div id="solved" class="solved"></div>
+      <div id="board" class="board"></div>
+      <p id="message" class="message" aria-live="polite"></p>
+
+      <div id="controls" class="controls">
+        <button id="shuffle-btn" class="icon-btn" aria-label="Shuffle tiles">🔀</button>
+        <button id="hint-btn" class="icon-btn" aria-label="Get a hint">💡</button>
+        <button id="clear-btn" class="ctrl-btn">Clear</button>
+        <button id="check-btn" class="ctrl-btn check" disabled>Check ✔</button>
+      </div>
+
+      <button id="new-btn" class="new-btn hidden">New game ▶</button>
+    </main>
+  </div>
+
+  <div id="confetti" class="confetti" aria-hidden="true"></div>
+
+  <script src="../shared/words.js"></script>
+  <script src="../shared/confetti.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

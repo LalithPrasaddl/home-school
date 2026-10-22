@@ -1,0 +1,104 @@
+.sc {
+  width: 100%;
+  max-width: 560px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.sc-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 16px;
+}
+.sc-title { margin: 0; font-size: 1.25rem; text-align: center; flex: 1; }
+
+.sc-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 16px 1.2rem;
+}
+
+.dots { display: flex; gap: 6px; }
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #e5dccb;
+}
+.dot.done { background: var(--good); }
+.dot.now { background: var(--accent); transform: scale(1.25); }
+
+.play, .done {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1rem;
+  width: 100%;
+}
+
+.picture { font-size: 5.5rem; line-height: 1; }
+
+/* Slots and tiles share a size so 5 letters always fit on a phone. */
+.slots, .tiles {
+  --box: min(16vw, 64px);
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+.slot, .tile {
+  width: var(--box);
+  height: var(--box);
+  display: grid;
+  place-items: center;
+  padding: 0;
+  font: inherit;
+  font-size: calc(var(--box) * 0.55);
+  font-weight: 800;
+  text-transform: uppercase;
+  border-radius: 12px;
+  cursor: pointer;
+  color: var(--ink);
+}
+.slot {
+  background: transparent;
+  border: 3px dashed #c9bfae;
+}
+.slot.filled { background: var(--card); border: 3px solid var(--ink); animation: pop 0.12s ease; }
+.slot.hinted { background: #fff3c4; border-color: #f2b705; cursor: default; }
+.slots.win .slot { background: var(--good); border-color: var(--good); color: white; animation: bounce 0.5s ease; }
+.slots.win .slot:nth-child(2) { animation-delay: 0.08s; }
+.slots.win .slot:nth-child(3) { animation-delay: 0.16s; }
+.slots.win .slot:nth-child(4) { animation-delay: 0.24s; }
+.slots.win .slot:nth-child(5) { animation-delay: 0.32s; }
+.slots.shake { animation: shake 0.4s ease; }
+
+.tile {
+  border: none;
+  background: var(--accent2);
+  box-shadow: 0 4px 0 #5aa3ab;
+}
+.tile:active { transform: translateY(3px); box-shadow: 0 1px 0 #5aa3ab; }
+.tile.used { visibility: hidden; }
+
+.msg { margin: 0; min-height: 1.5em; text-align: center; font-weight: 700; }
+
+.done-star { font-size: 5rem; animation: pop 0.6s ease; }
+.done-text { margin: 0; font-size: 1.3rem; font-weight: 700; }
+
+@keyframes bounce { 40% { transform: translateY(-14px); } }
+@keyframes shake {
+  20%, 60% { transform: translateX(-8px); }
+  40%, 80% { transform: translateX(8px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slot.filled, .slots.win .slot, .slots.shake, .done-star { animation: none; }
+}

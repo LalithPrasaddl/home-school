@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Word Scramble</title>
+  <link rel="stylesheet" href="../shared/theme.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="sc">
+    <header class="sc-header">
+      <a class="icon-btn" href="../" aria-label="Back to all games">🏠</a>
+      <h1 class="sc-title">Word Scramble</h1>
+      <button id="hint-btn" class="icon-btn" aria-label="Hint">💡</button>
+      <button id="restart-btn" class="icon-btn" aria-label="New round">🔄</button>
+    </header>
+
+    <main class="sc-main">
+      <div id="dots" class="dots" aria-hidden="true"></div>
+
+      <section id="play" class="play">
+        <div id="picture" class="picture"></div>
+        <div id="slots" class="slots"></div>
+        <p id="msg" class="msg" aria-live="polite">Tap the letters to fix the word!</p>
+        <div id="tiles" class="tiles"></div>
+      </section>
+
+      <section id="done" class="done hidden">
+        <div class="done-star">🌟</div>
+        <p class="done-text">You unscrambled them all!</p>
+        <button id="new-btn" class="new-btn">Play again ▶</button>
+      </section>
+    </main>
+  </div>
+
+  <div id="confetti" class="confetti" aria-hidden="true"></div>
+
+  <script src="../shared/words.js"></script>
+  <script src="../busy-bee/dictionary.js"></script>
+  <script src="../shared/confetti.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

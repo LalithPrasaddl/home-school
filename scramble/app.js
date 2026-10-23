@@ -2,6 +2,8 @@
 const ROUND_PLAN = [3, 3, 4, 4, 4, 4, 4, 4, 5, 5];
 const NEXT_MS = 1300; // pause on a solved word before the next one
 const WRONG_MS = 900; // how long a wrong answer stays before the letters go back
+// The picture gave the word away, so it's hidden (kids' feedback). Flip to true to bring it back.
+const SHOW_PICTURE = false;
 
 // Any real word, so a different word made from the same letters (ARE for EAR)
 // gets a "that's a word too" instead of a plain "try again".
@@ -116,7 +118,7 @@ function check() {
     return;
   }
   setMsg(REAL_WORDS.has(guess)
-    ? `${guess.toUpperCase()} is a word too, but not this picture! 🤔`
+    ? `${guess.toUpperCase()} is a word too, but not ${SHOW_PICTURE ? 'this picture' : 'the one we want'}! 🤔`
     : 'Not quite, try again!');
   slotBox.classList.add('shake');
   setTimeout(() => {
@@ -146,7 +148,9 @@ function showWord() {
   slots = target.map(() => null);
   hinted = 0;
   busy = false;
-  document.getElementById('picture').textContent = w.emoji;
+  const pic = document.getElementById('picture');
+  pic.textContent = w.emoji;
+  pic.classList.toggle('hidden', !SHOW_PICTURE);
   document.getElementById('slots').classList.remove('win', 'shake');
   setMsg('Tap the letters to fix the word!');
   renderDots();
